@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopsouzzaAppScraper</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">
+                    <i class="fas fa-robot"></i>
+                    ShopsouzzaAppScraper
+                </h1>
+                <p class="subtitle">Extração Inteligente de Produtos 24/7</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Scrapers Grid -->
+            <section class="scrapers-section">
+                <h2 class="section-title">
+                    <i class="fas fa-store"></i>
+                    Lojas Disponíveis
+                </h2>
+                
+                <div class="scrapers-grid" id="scrapersGrid">
+                    {% for scraper_id, scraper in scrapers.items() %}
+                    <div class="scraper-card" data-scraper="{{ scraper_id }}" style="border-left: 4px solid {{ scraper.color }};">
+                        <div class="scraper-icon">{{ scraper.icon }}</div>
+                        <h3 class="scraper-name">{{ scraper.name }}</h3>
+                        <p class="scraper-description">{{ scraper.description }}</p>
+                        <button class="scraper-button" onclick="executeScraper('{{ scraper_id }}')" style="background: {{ scraper.color }};">
+                            <i class="fas fa-play"></i>
+                            Executar
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- Execution Panel -->
+            <section class="execution-section">
+                <div class="glass-panel">
+                    <h3 class="panel-title">
+                        <i class="fas fa-chart-line"></i>
+                        Painel de Execução
+                    </h3>
+                    
+                    <div class="execution-info" id="executionInfo">
+                        <div class="status-message" id="statusMessage">
+                            Selecione uma loja para iniciar a extração
+                        </div>
+                        
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-text" id="progressText">0%</div>
+                        </div>
+                        
+                        <div class="stats-grid" id="statsGrid" style="display: none;">
+                            <div class="stat-item">
+                                <i class="fas fa-box-open"></i>
+                                <span class="stat-value" id="productsCount">0</span>
+                                <span class="stat-label">Produtos</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-clock"></i>
+                                <span class="stat-value" id="executionTime">0s</span>
+                                <span class="stat-label">Tempo</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-database"></i>
+                                <span class="stat-value" id="statusBadge">-</span>
+                                <span class="stat-label">Status</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <div class="glass-panel">
+                    <h3 class="panel-title">
+                        <i class="fas fa-upload"></i>
+                        Adicionar Nova Loja
+                    </h3>
+                    <p class="panel-description">
+                        Sistema de upload preparado para expansão futura
+                    </p>
+                    
+                    <div class="upload-form">
+                        <div class="file-input-container">
+                            <input type="file" id="scraperFile" accept=".py" class="file-input" disabled>
+                            <label for="scraperFile" class="file-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                Em breve: Upload de Scrapers
+                            </label>
+                        </div>
+                        <button class="upload-button" onclick="showComingSoon()">
+                            <i class="fas fa-plus"></i>
+                            Carregar Scraper
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2024 ShopsouzzaAppScraper. Em breve em www.vesteemarca.com</p>
+                <div class="status-indicator">
+                    <i class="fas fa-circle status-online"></i>
+                    Sistema Online
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">Processando...</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
